@@ -98,6 +98,14 @@ logging_send_syslog_msg(ldconfig_t)
 userdom_use_user_terminals(ldconfig_t)
 userdom_use_all_users_fds(ldconfig_t)
 
+ifdef(`distro_gentoo',`
+	# All this is for the ldconfig script on Gentoo musl profiles
+	allow ldconfig_t self:fifo_file rw_fifo_file_perms;
+
+	corecmd_exec_bin(ldconfig_t)
+	corecmd_exec_shell(ldconfig_t)
+')
+
 ifdef(`distro_ubuntu',`
 	optional_policy(`
 		unconfined_domain(ldconfig_t)
